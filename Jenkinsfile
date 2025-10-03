@@ -29,7 +29,8 @@ environment {
             sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
         }
     } 
-
+  }
+}
     
     
   
