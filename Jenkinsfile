@@ -1,18 +1,34 @@
 pipeline {
    agent any
+environment { 
+   NAME = "ticketreservation_system"
+   VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
+   IMAGE = "${NAME}:${VERSION}"
+   IMAGE_REPO="jyotipmohapatra"
+   IMAGE_URL='docker.io'
+   
+}   
+
   stages {
     stage('Cloning Git') {
       steps {
-        git branch: 'main', url: 'https://github.com/Hemantakumarpati/ticket-reservation-system.git'
+      git branch: 'main', url: 'https://github.com/git-jyoti/ticketreservation_system.git'
       }
     }
-   stage('Compile Package and Create war file') {
-      steps {
+    stage('Compile Package and Create war file') {
+      steps { 
         sh "mvn package"
       }
     }
-  }
-}
+     stage('Build result') {
+     steps {
+            echo "Running ${VERSION} on ${env.JENKINS_URL}"
+            //git branch: "${env.BRANCH_NAME}", url: 'https://github.com/git-jyoti/ticketreservation_system.git'
+            //echo "for brnach ${env.BRANCH_NAME}"
+            sh "docker build -t ${NAME} ."
+            sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
+        }
+    } 
 
     
     
