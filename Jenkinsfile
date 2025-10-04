@@ -7,8 +7,7 @@ environment {
    IMAGE_REPO="jyotipmohapatra"
    IMAGE_URL='docker.io'
    
-}   
-
+}
   stages {
     stage('Cloning Git') {
       steps {
@@ -21,10 +20,10 @@ environment {
       }
     }
   }
-    stage('Build result') {
+   stage('Build result') {
      steps {
             echo "Running ${VERSION} on ${env.JENKINS_URL}"
-            git branch: "${env.BRANCH_NAME}", url: 'https://github.com/git-jyoti/ticketreservation_system.git'
+            //git branch: "${env.BRANCH_NAME}", url: 'https://github.com/git-jyoti/ticketreservation_system.git'
             //echo "for brnach ${env.BRANCH_NAME}"
             sh "docker build -t ${NAME} ."
             sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
